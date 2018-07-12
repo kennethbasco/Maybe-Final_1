@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody rb;
 	private int count;
     public float rbvelocity;
-
+    public float rbaccel;
+    public float lastVelocity;
     // At the start of the game..
     void Start ()
 	{
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 
         //gets initial velocity
         rbvelocity = rb.velocity.magnitude;
+        rbaccel = 0.0f;
 		// Set the count to zero 
 		count = 0;
 
@@ -51,10 +53,10 @@ public class PlayerController : MonoBehaviour {
 
         rbvelocity = rb.velocity.magnitude;
 
-        /*
-        acceleration = (rb.velocity - lastVelocity) / Time.fixedDeltaTime;
-        lastVelocity = rb.velocity;
-        */
+        //acceleration
+        rbaccel = (rbvelocity - lastVelocity) / Time.fixedDeltaTime;
+        lastVelocity = rbvelocity;
+        
         SetCountText();
 
     }
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 		countText.text = "Count: " + count.ToString ();
 
         //accelText 
-        accelText.text = "velocity: " + rbvelocity.ToString();
+        accelText.text = "velocity: " + System.Math.Round(rbvelocity, 2).ToString();
 
 		// Check if our 'count' is equal to or exceeded 12
 		if (count >= 12) 
