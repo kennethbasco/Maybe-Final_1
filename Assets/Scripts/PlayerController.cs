@@ -11,12 +11,19 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public Text countText;
 	public Text winText;
+
+    public Text velText;
     public Text accelText;
+    
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
 	private int count;
-    public float rbvelocity;
-    public float rbaccel;
+
+    public float rbvelocity; //velocity of rigidbody
+    public float rbaccel; //acceleration of rigidbody
+
+    public GameObject platPrefab;
+
     public float lastVelocity;
     // At the start of the game..
     void Start ()
@@ -44,8 +51,15 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        if (Input.GetButtonDown("Jump"))
+        {
+            // the cube is going to move upwards in 10 units per second
+            rb.velocity = new Vector3(0, 10, 0);
+
+        }
+
+            // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
         // Add a physical force to our Player rigidbody using our 'movement' Vector3 above, 
         // multiplying it by 'speed' - our public player speed that appears in the inspector
@@ -85,14 +99,34 @@ public class PlayerController : MonoBehaviour {
 		// Update the text field of our 'countText' variable
 		countText.text = "Count: " + count.ToString ();
 
-        //accelText 
-        accelText.text = "velocity: " + System.Math.Round(rbvelocity, 2).ToString();
+        //velText
+        velText.text = "velocity: " + System.Math.Round(rbvelocity, 2).ToString();
 
-		// Check if our 'count' is equal to or exceeded 12
-		if (count >= 12) 
+        //accelText 
+        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 2).ToString();
+
+
+
+        // Check if our 'count' is equal to or exceeded 12
+        if (count >= 12) 
 		{
 			// Set the text value of our 'winText'
 			winText.text = "You Win!";
 		}
 	}
+}
+
+public PlayerPlat makePlat()
+{                                    // m
+
+    GameObject platGO = Instantiate<GameObject>(def.platPrefab);
+
+   
+    platGO.transform.position = rb.position;
+
+                    
+
+
+
+
 }
