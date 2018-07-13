@@ -54,7 +54,8 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             // the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 10, 0);
+            // rb.velocity = new Vector3(0, 10, 0);
+            makePlat();
 
         }
 
@@ -114,19 +115,27 @@ public class PlayerController : MonoBehaviour {
 			winText.text = "You Win!";
 		}
 	}
-}
 
-public PlayerPlat makePlat()
-{                                    // m
 
-    GameObject platGO = Instantiate<GameObject>(def.platPrefab);
+    void makePlat()
+    {                                                        // b
 
-   
-    platGO.transform.position = rb.position;
+        GameObject platGO = Instantiate<GameObject>(platPrefab);
 
-                    
+        platGO.transform.position = transform.position;
 
 
 
+    }
 
 }
+
+
+
+
+
+
+
+
+
+

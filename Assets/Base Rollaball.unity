@@ -689,6 +689,12 @@ Prefab:
       propertyPath: accelText
       value: 
       objectReference: {fileID: 168346154}
+    - target: {fileID: 114722643794919646, guid: 100a172aaa6b23747a23ad707ae0a16d,
+        type: 2}
+      propertyPath: platPrefab
+      value: 
+      objectReference: {fileID: 1235406323282892, guid: 6590d89003c845545bff7f47f9199fd1,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 100a172aaa6b23747a23ad707ae0a16d, type: 2}
   m_IsPrefabParent: 0
