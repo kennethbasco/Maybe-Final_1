@@ -14,17 +14,25 @@ public class PlayerController : MonoBehaviour {
 
     public Text velText;
     public Text accelText;
-    
+    public Text maxVel;
+    public Text maxAcc;
+
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
 	private int count;
+    private int mvel;
+    private int macc;
 
     public float rbvelocity; //velocity of rigidbody
     public float rbaccel; //acceleration of rigidbody
 
     public GameObject platPrefab;
+    public GameObject aPlatPrefab;
+    public GameObject vPlatPrefab;
 
     public float lastVelocity;
+    Vector3 movement;
+    public bool inAir = false;
     // At the start of the game..
     void Start ()
 	{
@@ -47,20 +55,37 @@ public class PlayerController : MonoBehaviour {
     // Each physics step..
     void FixedUpdate()
     {
+
+        if(rb.velocity.y == 0)
+        {
+            inAir = false;
+        }
+
         // Set some local float variables equal to the value of our Horizontal and Vertical Inputs
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !(inAir))
         {
-            // the cube is going to move upwards in 10 units per second
-            // rb.velocity = new Vector3(0, 10, 0);
-            makePlat();
+            //the cube is going to move upwards in 10 units per second
+            rb.velocity = new Vector3(0, 10, 0);
+            inAir = true;
 
         }
 
-            // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
-            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+
+        // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
+        
+
+        if (!inAir)
+        {
+            movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        }
+        
+
+        
+
 
         // Add a physical force to our Player rigidbody using our 'movement' Vector3 above, 
         // multiplying it by 'speed' - our public player speed that appears in the inspector
@@ -76,9 +101,20 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-	// When this game object intersects a collider with 'is trigger' checked, 
-	// store a reference to that collider in a variable named 'other'..
-	void OnTriggerEnter(Collider other) 
+    private void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+
+            makePlat();
+
+        }
+
+    }
+    // When this game object intersects a collider with 'is trigger' checked, 
+    // store a reference to that collider in a variable named 'other'..
+    void OnTriggerEnter(Collider other) 
 	{
 		// ..and if the game object we intersect has the tag 'Pick Up' assigned to it..
 		if (other.gameObject.CompareTag ("Pick Up"))
@@ -121,6 +157,28 @@ public class PlayerController : MonoBehaviour {
     {                                                        // b
 
         GameObject platGO = Instantiate<GameObject>(platPrefab);
+
+        platGO.transform.position = transform.position;
+
+
+
+    }
+
+    void makeAplat()
+    {                                                        // b
+
+        GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
+
+        platGO.transform.position = transform.position;
+
+
+
+    }
+
+    void makeVplat()
+    {                                                        // b
+
+        GameObject platGO = Instantiate<GameObject>(vPlatPrefab);
 
         platGO.transform.position = transform.position;
 
