@@ -63,7 +63,8 @@ public class PlayerController : MonoBehaviour {
             inAir = false;
         }
 
-        
+       
+
         // Set some local float variables equal to the value of our Horizontal and Vertical Inputs
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && !(inAir))
         {
             //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 10, 0);
+            rb.velocity = new Vector3(0, 5, 0);
             inAir = true;
 
         }
@@ -107,11 +108,16 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         
-        if(Input.GetKeyDown(KeyCode.Z))
+        //make platform ability
+        if (Input.GetKeyDown(KeyCode.Z) && (mvel >= 3))
         {
-            makeAplat();
-        }
 
+            makeAplat();
+            rbvelocity--;
+
+
+        }
+        
     }
 
 
