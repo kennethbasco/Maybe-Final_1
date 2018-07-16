@@ -53,9 +53,11 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -68,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -114,9 +117,15 @@ MonoBehaviour:
   winText: {fileID: 0}
   velText: {fileID: 0}
   accelText: {fileID: 0}
+  maxVel: {fileID: 0}
+  maxAcc: {fileID: 0}
   rbvelocity: 0
   rbaccel: 0
+  platPrefab: {fileID: 1235406323282892, guid: 6590d89003c845545bff7f47f9199fd1, type: 2}
+  aPlatPrefab: {fileID: 0}
+  vPlatPrefab: {fileID: 0}
   lastVelocity: 0
+  inAir: 0
 --- !u!135 &135748073022601770
 SphereCollider:
   m_ObjectHideFlags: 1

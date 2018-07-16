@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour {
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
 	private int count;
-    private int mvel;
-    private int macc;
+    private int mvel = 0;
+    private int macc = 0;
+
 
     public float rbvelocity; //velocity of rigidbody
     public float rbaccel; //acceleration of rigidbody
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour {
     // At the start of the game..
     void Start ()
 	{
+        
 		// Assign the Rigidbody component to our private rb variable
 		rb = GetComponent<Rigidbody>();
 
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour {
             inAir = false;
         }
 
+        
         // Set some local float variables equal to the value of our Horizontal and Vertical Inputs
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -101,17 +104,17 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    private void Update()
+    void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Z))
+        
+        if(Input.GetKeyDown(KeyCode.Z))
         {
-
-            makePlat();
-
+            makeAplat();
         }
 
     }
+
+
     // When this game object intersects a collider with 'is trigger' checked, 
     // store a reference to that collider in a variable named 'other'..
     void OnTriggerEnter(Collider other) 
@@ -142,7 +145,17 @@ public class PlayerController : MonoBehaviour {
         //accelText 
         accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 2).ToString();
 
+        if(rbvelocity > mvel )
+        {
+            mvel = Mathf.RoundToInt(rbvelocity);
+            maxVel.text = "MAX vel: " + mvel.ToString();
+        }
+        else
+        {
+            return;
+        }
 
+        
 
         // Check if our 'count' is equal to or exceeded 12
         if (count >= 12) 
