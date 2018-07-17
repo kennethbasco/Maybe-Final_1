@@ -80,17 +80,17 @@
     <Reference Include="ProBuilderCore-Unity5">
       <HintPath>Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
     </Reference>
-    <Reference Include="pb_Stl">
-      <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
-    </Reference>
-    <Reference Include="Poly2Tri">
-      <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
-    </Reference>
     <Reference Include="ProBuilderMeshOps-Unity5">
       <HintPath>Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
     </Reference>
     <Reference Include="KdTreeLib">
       <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="pb_Stl">
+      <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
+    </Reference>
+    <Reference Include="Poly2Tri">
+      <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +100,13 @@
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Constant.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Enum.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_IconUtility.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_IgnoreSnapAttribute.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_SceneMeshRender.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Util.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\MonoBehaviour\pg_IgnoreSnap.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Rotator.cs" />
@@ -128,6 +135,9 @@
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_VertexPicker.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_VertexShader.shader" />
     <None Include="Assets\ProCore\ProBuilder\readme.txt" />
+    <None Include="Assets\ProCore\ProGrids\About\changelog.txt" />
+    <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />
+    <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -109,11 +109,11 @@ public class PlayerController : MonoBehaviour {
     {
         
         //make platform ability
-        if (Input.GetKeyDown(KeyCode.Z) && (mvel >= 3))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
 
             makeAplat();
-            rbvelocity--;
+            rb.AddForce(-100.0f, 0.0f, -100.0f);
 
 
         }
