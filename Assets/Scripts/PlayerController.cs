@@ -58,42 +58,12 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
 
-        if(rb.velocity.y == 0)
-        {
-            inAir = false;
-        }
-
-       
-
-        // Set some local float variables equal to the value of our Horizontal and Vertical Inputs
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        if (Input.GetButtonDown("Jump") && !(inAir))
-        {
-            //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 5, 0);
-            inAir = true;
-
-        }
 
 
 
-        // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
+
+        moveMent();
         
-
-        if (!inAir)
-        {
-            movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        }
-        
-
-        
-
-
-        // Add a physical force to our Player rigidbody using our 'movement' Vector3 above, 
-        // multiplying it by 'speed' - our public player speed that appears in the inspector
-        rb.AddForce(movement * speed);
 
         rbvelocity = rb.velocity.magnitude;
 
@@ -109,11 +79,11 @@ public class PlayerController : MonoBehaviour {
     {
         
         //make platform ability
-        if (Input.GetKeyDown(KeyCode.Z) && (mvel >= 3))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
 
             makeAplat();
-            rbvelocity--;
+            //rb.AddForce(-movement * speed * 100);
 
 
         }
@@ -202,6 +172,52 @@ public class PlayerController : MonoBehaviour {
         platGO.transform.position = transform.position;
 
 
+
+    }
+
+    void moveMent()
+    {
+        if (rb.velocity.y == 0)
+        {
+            inAir = false;
+        }
+
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        if (Input.GetButtonDown("Jump") && !(inAir))
+        {
+            //the cube is going to move upwards in 10 units per second
+            rb.velocity = new Vector3(0, 5, 0);
+            inAir = true;
+
+        }
+
+        if (Input.GetButtonDown("Jump") && !(inAir))
+        {
+            //the cube is going to move upwards in 10 units per second
+            rb.velocity = new Vector3(0, 5, 0);
+            inAir = true;
+
+        }
+
+
+
+        // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
+
+
+        if (!inAir)
+        {
+            movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        }
+
+
+
+
+
+        // Add a physical force to our Player rigidbody using our 'movement' Vector3 above, 
+        // multiplying it by 'speed' - our public player speed that appears in the inspector
+        rb.AddForce(movement * speed);
 
     }
 
