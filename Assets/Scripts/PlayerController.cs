@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour {
     private int mvel = 0;
     private int macc = 0;
 
+    //used to determine size of platform
+    private float momenSize = 0;
+
+
 
     public float rbvelocity; //velocity of rigidbody
     public float rbaccel; //acceleration of rigidbody
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour {
 
             //rb.AddForce(-movement * speed * 100);
 
-            rb.AddForce(-100.0f, 0.0f, -100.0f);
+            //rb.AddForce(-100.0f, 0.0f, -100.0f);
 
 
 
@@ -163,6 +167,11 @@ public class PlayerController : MonoBehaviour {
         GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
 
         platGO.transform.position = transform.position;
+
+        //momenSize = (rbvelocity * 0.2f) * rbvelocity;
+        //rb.AddForce(-movement * momenSize);
+
+        //
 
 
 
