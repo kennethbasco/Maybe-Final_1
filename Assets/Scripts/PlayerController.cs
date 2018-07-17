@@ -83,7 +83,11 @@ public class PlayerController : MonoBehaviour {
         {
 
             makeAplat();
+
             //rb.AddForce(-movement * speed * 100);
+
+            rb.AddForce(-100.0f, 0.0f, -100.0f);
+
 
 
         }
