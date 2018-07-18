@@ -162,20 +162,20 @@ public class PlayerController : MonoBehaviour {
     {                                                        // b
         if(rbvelocity > 3.0f)
         {
-            momenSize = (rbvelocity * 0.3f) * rbvelocity ;
-            //rb.AddForce(-movement * momenSize);
+            momenSize = rbvelocity * Mathf.Sin(rbvelocity/ 20*(Mathf.PI / 2));
+            
 
             GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
-            platGO.transform.localScale += Vector3.one * momenSize;
+            platGO.transform.localScale += Vector3.one * (momenSize*0.5f) ;
 
             platGO.transform.position = transform.position;
 
             //Vector3 tempVect = rb.velocity * rbvelocity;
             rb.isKinematic = true; 
-            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
+            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize*0.5f));
             rb.isKinematic = false;
 
-
+            rb.AddForce(-movement * momenSize);
         }
         else
         {
