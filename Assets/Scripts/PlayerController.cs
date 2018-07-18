@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public float rbvelocity; //velocity of rigidbody
+    public float rbvelocity; //current velocity of rigidbody
     public float rbaccel; //acceleration of rigidbody
 
     public GameObject platPrefab;
@@ -61,9 +61,6 @@ public class PlayerController : MonoBehaviour {
     // Each physics step..
     void FixedUpdate()
     {
-
-
-
 
 
         moveMent();
@@ -163,13 +160,32 @@ public class PlayerController : MonoBehaviour {
 
     void makeAplat()
     {                                                        // b
+        if(rbvelocity > 3.0f)
+        {
+            momenSize = (rbvelocity * 0.3f) * rbvelocity ;
+            //rb.AddForce(-movement * momenSize);
 
-        GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
+            GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
+            platGO.transform.localScale += Vector3.one * momenSize;
 
-        platGO.transform.position = transform.position;
+            platGO.transform.position = transform.position;
 
-        //momenSize = (rbvelocity * 0.2f) * rbvelocity;
-        //rb.AddForce(-movement * momenSize);
+            //Vector3 tempVect = rb.velocity * rbvelocity;
+            rb.isKinematic = true; 
+            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
+            rb.isKinematic = false;
+
+
+        }
+        else
+        {
+            return;
+        }
+       
+
+        
+
+        
 
         //
 
