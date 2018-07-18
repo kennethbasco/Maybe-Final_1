@@ -146,9 +146,56 @@ public class Player_2C : MonoBehaviour {
     void makePlat()
     {                                                        // b
 
-        GameObject platGO = Instantiate<GameObject>(platPrefab);
+        //punish at 18
+        //get bigger at 9
+        //you can only make some at 5
 
-        platGO.transform.position = transform.position;
+        if(rbvelocity < 5)
+        {
+            return;
+        }
+        else if( rbvelocity >= 5 && rbvelocity <= 13)
+        {
+            GameObject platGO = Instantiate<GameObject>(platPrefab);
+
+            platGO.transform.position = transform.position;
+
+        }else if( rbvelocity > 13 && rbvelocity <= 18 )
+        {
+
+            momenSize = rbvelocity * 0.5f;
+
+
+            GameObject platGO = Instantiate<GameObject>(platPrefab);
+            platGO.transform.localScale += Vector3.one * (momenSize);
+
+            platGO.transform.position = transform.position;
+
+            //Vector3 tempVect = rb.velocity * rbvelocity;
+            rb.isKinematic = true;
+            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
+            rb.isKinematic = false;
+
+            rb.AddForce(-movement * rbvelocity * 10f);
+        }
+        else
+        {
+            momenSize = rbvelocity * 0.5f;
+
+
+            GameObject platGO = Instantiate<GameObject>(platPrefab);
+            platGO.transform.localScale += Vector3.one * (momenSize);
+
+            platGO.transform.position = transform.position;
+
+            //Vector3 tempVect = rb.velocity * rbvelocity;
+            rb.isKinematic = true;
+            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
+            rb.isKinematic = false;
+
+            rb.AddForce(-movement * rbvelocity * 10f);
+        }
+        
 
 
 

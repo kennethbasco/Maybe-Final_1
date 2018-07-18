@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour {
     {
         
         //make platform ability
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.V))
         {
 
             makePlat();
