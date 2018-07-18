@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
 
-            makeAplat();
+            makePlat();
 
             //rb.AddForce(-movement * speed * 100);
 
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
         
 
         // Check if our 'count' is equal to or exceeded 12
-        if (count >= 12) 
+        if (count >= 13) 
 		{
 			// Set the text value of our 'winText'
 			winText.text = "You Win!";
@@ -160,19 +160,19 @@ public class PlayerController : MonoBehaviour {
 
     void makeAplat()
     {                                                        // b
-        if(rbvelocity > 3.0f)
+        if(rbvelocity > 9.0f)
         {
-            momenSize = rbvelocity * Mathf.Sin(rbvelocity/ 20*(Mathf.PI / 2));
+            momenSize = rbvelocity * Mathf.Sin(rbvelocity/ 30*(Mathf.PI / 2));
             
 
             GameObject platGO = Instantiate<GameObject>(aPlatPrefab);
-            platGO.transform.localScale += Vector3.one * (momenSize*0.5f) ;
+            platGO.transform.localScale += Vector3.one * (momenSize) ;
 
             platGO.transform.position = transform.position;
 
             //Vector3 tempVect = rb.velocity * rbvelocity;
             rb.isKinematic = true; 
-            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize*0.5f));
+            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
             rb.isKinematic = false;
 
             rb.AddForce(-movement * momenSize);
@@ -217,18 +217,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && !(inAir))
         {
             //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 5, 0);
+            rb.velocity = new Vector3(0, 7, 0);
             inAir = true;
 
         }
 
-        if (Input.GetButtonDown("Jump") && !(inAir))
-        {
-            //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 5, 0);
-            inAir = true;
-
-        }
+       
 
 
 
