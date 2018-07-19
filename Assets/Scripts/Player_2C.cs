@@ -17,12 +17,13 @@ public class Player_2C : MonoBehaviour {
     // Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
     private Rigidbody rb;
     private int count;
-    
+
+    public AudioSource sound;
 
     //used to determine size of platform
     private float momenSize = 0;
 
-
+    public AudioSource sound_2;
 
     public float rbvelocity; //current velocity of rigidbody
     public float rbaccel; //acceleration of rigidbody
@@ -99,10 +100,11 @@ public class Player_2C : MonoBehaviour {
             transform.position = new Vector3(-20, -13, 5);
         }
 
-        if (Input.GetButtonUp("R"))
+        if (Input.GetButtonDown("Escape"))
         {
-            makePlat();
+
             SceneManager.LoadScene("_Scene_0");
+
         }
 
     }
@@ -148,7 +150,7 @@ public class Player_2C : MonoBehaviour {
         velText.text = "velocity: " + System.Math.Round(rbvelocity, 1).ToString();
 
         //accelText 
-        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 1).ToString();
+        accelText.text = "Accel: " + System.Math.Round(rbaccel, 1).ToString();
 
        
 
@@ -175,9 +177,7 @@ public class Player_2C : MonoBehaviour {
     void makePlat()
     {                                                        // b
 
-        //punish at 18
-        //get bigger at 9
-        //you can only make some at 5
+        sound.Play();
 
         GameObject platGO = Instantiate<GameObject>(platPrefab);
 
@@ -246,6 +246,8 @@ public class Player_2C : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump_2") && !(inAir))
         {
+
+            sound_2.Play();
             //the cube is going to move upwards in 10 units per second
             rb.velocity = new Vector3(0, 7.5f, 0);
             inAir = true;
