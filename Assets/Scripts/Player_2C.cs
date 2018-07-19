@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Player_2C : MonoBehaviour {
     // Create public variables for player speed, and for the Text UI game objects
     public float speed;
@@ -10,14 +11,13 @@ public class Player_2C : MonoBehaviour {
 
     public Text velText;
     public Text accelText;
-    public Text maxVel;
-    public Text maxAcc;
+
+    public Text reStart;
 
     // Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
     private Rigidbody rb;
     private int count;
-    private int mvel = 0;
-    private int macc = 0;
+    
 
     //used to determine size of platform
     private float momenSize = 0;
@@ -52,6 +52,7 @@ public class Player_2C : MonoBehaviour {
 
         // Set the text property of our Win Text UI to an empty string, making the 'You Win' (game over message) blank
         winText.text = "";
+        reStart.text = "";
     }
 
     // Each physics step..
@@ -89,6 +90,21 @@ public class Player_2C : MonoBehaviour {
 
         }
 
+        if (rbvelocity < 54)
+        {
+            return;
+        }
+        else
+        {
+            transform.position = new Vector3(-20, -13, 5);
+        }
+
+        if (Input.GetButtonUp("R"))
+        {
+            makePlat();
+            SceneManager.LoadScene("_Scene_0");
+        }
+
     }
 
 
@@ -102,8 +118,20 @@ public class Player_2C : MonoBehaviour {
             // Make the other game object (the pick up) inactive, to make it disappear
             other.gameObject.SetActive(false);
 
-            // Add one to the score variable 'count'
-            count = count + 1;
+            if (rbvelocity < 6)
+            {
+
+                // Add one to the score variable 'count'
+                count = count + 1;
+            }
+            else if( rbvelocity > 6 && rbvelocity < 17)
+            {
+                count = count + 2;
+            }
+            else
+            {
+                count = count + 3;
+            }
 
             // Run the 'SetCountText()' function (see below)
             SetCountText();
@@ -114,31 +142,32 @@ public class Player_2C : MonoBehaviour {
     void SetCountText()
     {
         // Update the text field of our 'countText' variable
-        countText.text = "Count: " + count.ToString();
+        countText.text =  count.ToString();
 
         //velText
-        velText.text = "velocity: " + System.Math.Round(rbvelocity, 2).ToString();
+        velText.text = "velocity: " + System.Math.Round(rbvelocity, 1).ToString();
 
         //accelText 
-        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 2).ToString();
+        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 1).ToString();
 
-        if (rbvelocity > mvel)
-        {
-            mvel = Mathf.RoundToInt(rbvelocity);
-            maxVel.text = "MAX vel: " + mvel.ToString();
-        }
-        else
-        {
-            return;
-        }
+       
 
 
 
         // Check if our 'count' is equal to or exceeded 12
-        if (count >= 13)
+        if (count >= 10)
         {
             // Set the text value of our 'winText'
-            winText.text = "You Win!";
+            winText.text = "Player 2 Wins!";
+            reStart.text = "[R]estart";
+
+            GameObject[] kill = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject kGO in kill)
+            {
+                kGO.SetActive(false);
+            }
+
         }
     }
 
@@ -150,53 +179,11 @@ public class Player_2C : MonoBehaviour {
         //get bigger at 9
         //you can only make some at 5
 
-        if(rbvelocity < 5)
-        {
-            return;
-        }
-        else if( rbvelocity >= 5 && rbvelocity <= 13)
-        {
-            GameObject platGO = Instantiate<GameObject>(platPrefab);
+        GameObject platGO = Instantiate<GameObject>(platPrefab);
 
-            platGO.transform.position = transform.position;
+        platGO.transform.position = transform.position;
 
-        }else if( rbvelocity > 13 && rbvelocity <= 18 )
-        {
-
-            momenSize = rbvelocity * 0.5f;
-
-
-            GameObject platGO = Instantiate<GameObject>(platPrefab);
-            platGO.transform.localScale += Vector3.one * (momenSize);
-
-            platGO.transform.position = transform.position;
-
-            //Vector3 tempVect = rb.velocity * rbvelocity;
-            rb.isKinematic = true;
-            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
-            rb.isKinematic = false;
-
-            rb.AddForce(-movement * rbvelocity * 10f);
-        }
-        else
-        {
-            momenSize = rbvelocity * 0.5f;
-
-
-            GameObject platGO = Instantiate<GameObject>(platPrefab);
-            platGO.transform.localScale += Vector3.one * (momenSize);
-
-            platGO.transform.position = transform.position;
-
-            //Vector3 tempVect = rb.velocity * rbvelocity;
-            rb.isKinematic = true;
-            transform.position = platGO.transform.position + (Vector3.up * Mathf.Abs(momenSize));
-            rb.isKinematic = false;
-
-            rb.AddForce(-movement * rbvelocity * 10f);
-        }
-        
-
+        rb.AddForce(-movement * rbvelocity * 130f);
 
 
     }
@@ -260,7 +247,7 @@ public class Player_2C : MonoBehaviour {
         if (Input.GetButtonDown("Jump_2") && !(inAir))
         {
             //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 7, 0);
+            rb.velocity = new Vector3(0, 7.5f, 0);
             inAir = true;
 
         }

@@ -4,7 +4,8 @@
 using UnityEngine.UI;
 
 using System.Collections;
-
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 	
 	// Create public variables for player speed, and for the Text UI game objects
@@ -14,14 +15,14 @@ public class PlayerController : MonoBehaviour {
 
     public Text velText;
     public Text accelText;
-    public Text maxVel;
-    public Text maxAcc;
+
+    public Text reStart;
+   
 
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
 	private int count;
-    private int mvel = 0;
-    private int macc = 0;
+    
 
     //used to determine size of platform
     private float momenSize = 0;
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour {
 
 		// Set the text property of our Win Text UI to an empty string, making the 'You Win' (game over message) blank
 		winText.text = "";
+        reStart.text = "";
 	}
 
     // Each physics step..
@@ -85,12 +87,21 @@ public class PlayerController : MonoBehaviour {
 
             makePlat();
 
-            //rb.AddForce(-movement * speed * 100);
 
-            //rb.AddForce(-100.0f, 0.0f, -100.0f);
+        }
+
+        if(rbvelocity < 54 )
+        {
+            return;
+        }else
+        {
+            transform.position = new Vector3(-31, -13, 5);
+        }
 
 
-
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("_Scene_0");
         }
         
     }
@@ -106,11 +117,24 @@ public class PlayerController : MonoBehaviour {
 			// Make the other game object (the pick up) inactive, to make it disappear
 			other.gameObject.SetActive (false);
 
-			// Add one to the score variable 'count'
-			count = count + 1;
+            // Add one to the score variable 'count'
+            if (rbvelocity < 6)
+            {
 
-			// Run the 'SetCountText()' function (see below)
-			SetCountText ();
+                // Add one to the score variable 'count'
+                count = count + 1;
+            }
+            else if (rbvelocity > 6 && rbvelocity < 17)
+            {
+                count = count + 2;
+            }
+            else
+            {
+                count = count + 3;
+            }
+
+            // Run the 'SetCountText()' function (see below)
+            SetCountText ();
 		}
 	}
 
@@ -118,42 +142,47 @@ public class PlayerController : MonoBehaviour {
 	void SetCountText()
 	{
 		// Update the text field of our 'countText' variable
-		countText.text = "Count: " + count.ToString ();
+		countText.text =  count.ToString ();
 
         //velText
-        velText.text = "velocity: " + System.Math.Round(rbvelocity, 2).ToString();
+        velText.text = "velocity: " + System.Math.Round(rbvelocity, 1).ToString();
 
         //accelText 
-        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 2).ToString();
+        accelText.text = "Acceleration: " + System.Math.Round(rbaccel, 1).ToString();
 
-        if(rbvelocity > mvel )
-        {
-            mvel = Mathf.RoundToInt(rbvelocity);
-            maxVel.text = "MAX vel: " + mvel.ToString();
-        }
-        else
-        {
-            return;
-        }
+       
 
         
 
         // Check if our 'count' is equal to or exceeded 12
-        if (count >= 13) 
+        if (count >= 10) 
 		{
 			// Set the text value of our 'winText'
-			winText.text = "You Win!";
-		}
+			winText.text = "Player 1 Wins!";
+            reStart.text = "[R]estart";
+            GameObject[] kill = GameObject.FindGameObjectsWithTag("Player_2");
+
+            foreach(GameObject kGO in kill)
+            {
+                kGO.SetActive(false);
+            }
+        }
 	}
 
 
     void makePlat()
     {                                                        // b
 
+
+        
+
+
+
         GameObject platGO = Instantiate<GameObject>(platPrefab);
 
         platGO.transform.position = transform.position;
 
+        rb.AddForce(-movement * rbvelocity * 130f );
 
 
     }
@@ -217,7 +246,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && !(inAir))
         {
             //the cube is going to move upwards in 10 units per second
-            rb.velocity = new Vector3(0, 7, 0);
+            rb.velocity = new Vector3(0, 7.5f, 0);
             inAir = true;
 
         }
